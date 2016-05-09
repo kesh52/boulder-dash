@@ -167,7 +167,7 @@ public class LevelModel extends Observable implements Runnable {
 
 	/**
 	 * Updates the horizontal & vertical positions of Rockford in the model
-	 * 
+	 *
 	 * @param  posX  Horizontal position of Rockford
 	 * @param  posY  Vertical position of Rockford
 	 */
@@ -196,9 +196,9 @@ public class LevelModel extends Observable implements Runnable {
 	private void playCollisionSound(int posX, int posY) {
 		String collisionSound = null;
 
-		if (this.getRockford().isCollisionDone() == false) {
+		if (!this.getRockford().isCollisionDone()) {
 			// Out of bounds?
-			if (this.isOutOfBounds(posX, posY) == true) {
+			if (this.isOutOfBounds(posX, posY)) {
 				collisionSound = "touch";
 			} else {
 				DisplayableElementModel nextElement = this.groundGrid[posX][posY];
@@ -224,7 +224,7 @@ public class LevelModel extends Observable implements Runnable {
 
 	/**
 	 * Sets the new Rockford position
-	 * 
+	 *
 	 * @param  posX  Next horizontal position on the grid
 	 * @param  posY  Next vertical position on the grid
 	 */
@@ -246,7 +246,7 @@ public class LevelModel extends Observable implements Runnable {
 		this.playCollisionSound(posX, posY);
 
 		// Check that we are not out of bound...
-		if (this.isOutOfBounds(posX, posY) == false) {
+		if (!this.isOutOfBounds(posX, posY)) {
 			// Create a new empty model in the old pos of Rockford
 			this.groundGrid[oldX][oldY] = new EmptyModel();
 
@@ -475,7 +475,7 @@ public class LevelModel extends Observable implements Runnable {
 
 	/**
 	 * Update the current sprite Notifies the observers
-	 * 
+	 *
 	 * @param  x  Sprite block horizontal position
 	 * @param  y  Sprite block vertical position
 	 */
@@ -761,7 +761,7 @@ public class LevelModel extends Observable implements Runnable {
 
 	/**
 	 * Explose the brick wall
-	 * 
+	 *
 	 * @param  x
 	 * @param  y
 	 */
@@ -782,7 +782,7 @@ public class LevelModel extends Observable implements Runnable {
 
 	/**
 	 * Expand the ExpandingWallModel to right
-	 * 
+	 *
 	 * @param  x
 	 * @param  y
 	 */
@@ -792,7 +792,7 @@ public class LevelModel extends Observable implements Runnable {
 
 	/**
 	 * Set the gamePaused variable
-	 * 
+	 *
 	 * @param  gamePaused
 	 */
 	public void setGamePaused(boolean gamePaused) {
@@ -801,7 +801,7 @@ public class LevelModel extends Observable implements Runnable {
 
 	/**
 	 * Get the gamePaused variable
-	 * 
+	 *
 	 * @return  gamePaused
 	 */
 	public boolean getGamePaused() {
@@ -810,7 +810,7 @@ public class LevelModel extends Observable implements Runnable {
 
 	/**
 	 * Get the mode where this levelModel is used
-	 * 
+	 *
 	 * @return mode
 	 */
 	public String getMode() {
@@ -819,7 +819,7 @@ public class LevelModel extends Observable implements Runnable {
 
 	/**
 	 * Set the mode where this levelModel is used
-	 * 
+	 *
 	 * @param mode
 	 */
 	public void setMode(String mode) {

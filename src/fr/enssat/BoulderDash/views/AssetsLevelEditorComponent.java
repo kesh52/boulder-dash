@@ -18,14 +18,16 @@ import fr.enssat.BoulderDash.views.LevelEditorView;
  * @since       2015-06-22
  */
 public class AssetsLevelEditorComponent extends JPanel implements ActionListener {
+
+	private static List<String> choiceList = Arrays.asList(
+            "Boulder", "Diamond", "Dirt", "Brick Wall", "Expanding Wall", "Magic Wall", "Steel Wall", "Rockford"
+    );
+
     private LevelEditorView levelEditorView;
 
     /**
      * Available choices
      */
-    static List<String> choiceList = Arrays.asList(
-            "Boulder", "Diamond", "Dirt", "Brick Wall", "Expanding Wall", "Magic Wall", "Steel Wall", "Rockford"
-    );
 
     /**
      * Class constructor

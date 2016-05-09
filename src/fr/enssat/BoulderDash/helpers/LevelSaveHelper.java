@@ -101,10 +101,7 @@ public class LevelSaveHelper {
 
                 if(!matchedId.isEmpty()) {
                     tempLevelId = new Integer(matchedId);
-
-                    if (tempLevelId > electedLastLevelId) {
-                        electedLastLevelId = tempLevelId;
-                    }
+                    electedLastLevelId = getLvlID(tempLevelId, electedLastLevelId);
                 } else {
                     System.out.println("Match found but result empty for > " + file.getName());
                 }
@@ -124,6 +121,14 @@ public class LevelSaveHelper {
         }
 
         return "level" + finalLevelId;
+    }
+
+    private static Integer getLvlID(Integer tempLevelId, Integer electedLastLevelId)
+    {
+        if (tempLevelId > electedLastLevelId) {
+        	return tempLevelId;
+        }
+        return new Integer(-1);
     }
 
     /**
@@ -314,8 +319,6 @@ public class LevelSaveHelper {
      * @return  Grid line item sprite node
      */
     private Node gridLineItemSpriteNode(Document document, Integer curLineIndex, Integer curItemIndex) {
-        String groupValue, nameValue, stateValue, convertibleValue;
-
         DisplayableElementModel curGridElement = this.getGroundGrid()[curItemIndex][curLineIndex];
 
         // Null?
@@ -324,10 +327,20 @@ public class LevelSaveHelper {
         }
 
         // Retrieve current values
+        String groupValue;
         groupValue       = curGridElement.getGroupName();
+        String nameValue;
         nameValue        = curGridElement.getSpriteName();
+        String stateValue;
         stateValue       = curGridElement.getStateValue();
-        convertibleValue = curGridElement.isConvertible() ? "1" : "0";
+        String convertibleValue;
+
+        if (curGridElement.isConvertible())
+        {
+        	convertibleValue = "1";
+        } else {
+        	convertibleValue = "0";
+        }
 
         // Create sprite XML element
         Element gridLineItemSpriteElement = document.createElement("sprite");

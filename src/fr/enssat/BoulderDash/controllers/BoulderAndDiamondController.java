@@ -66,7 +66,7 @@ public class BoulderAndDiamondController implements Runnable {
 				}
 
 				String spriteName = elementModel.getSpriteName();
-				
+
 				// If it is a boulder or a diamond...
 				if (spriteName == "boulder" || spriteName == "diamond") {
 					this.manageFall(x, y);
@@ -90,7 +90,7 @@ public class BoulderAndDiamondController implements Runnable {
         DisplayableElementModel elementRight = this.levelModel.getGroundLevelModel()[x + 1][y];
         String spriteNameLeft  = elementLeft.getSpriteName();
 		String spriteNameRight = elementRight.getSpriteName();
-		
+
 		String way = "";
 		if(spriteNameLeft == "black"){
 			this.levelModel.expandThisWallToLeft(x,y);
@@ -142,14 +142,10 @@ public class BoulderAndDiamondController implements Runnable {
 
 			this.levelModel.setGameRunning(false);
 		} else if (spriteNameBelow == "magicwall") {
-			if (this.levelModel.getGroundLevelModel()[x][y].getSpriteName() == "boulder" 
-					&& (this.levelModel.getGroundLevelModel()[x][y+2].getSpriteName() == "dirt" ||
-							this.levelModel.getGroundLevelModel()[x][y+2].getSpriteName() == "black")) {
-				if(this.levelModel.getGroundLevelModel()[x][y].isConvertible()) {
-					this.levelModel.transformThisBoulderIntoADiamond(x, y);
-				} else {
-					this.levelModel.deleteThisBoulder(x, y);
-				}
+			String currentSpriteName = this.levelModel.getGroundLevelModel()[x][y].getSpriteName();
+			String topSpriteName = this.levelModel.getGroundLevelModel()[x][y+2].getSpriteName();
+			if (currentSpriteName == "boulder"	&& (topSpriteName == "dirt" || topSpriteName == "black")) {
+				transformBoulder(x, y);
 			}
 		} else if (elementBelow.isDestructible() && spriteNameBelow != "dirt" && this.levelModel.getGroundLevelModel()[x][y].isFalling()) {
 				this.levelModel.exploseThisBrickWall(x, y);
@@ -159,6 +155,14 @@ public class BoulderAndDiamondController implements Runnable {
 			this.levelModel.moveThisBoulderToLeft(x, y);
 		} else {
 			this.levelModel.getGroundLevelModel()[x][y].setFalling(false);
+		}
+	}
+
+	private void transformBoulder(int x, int y){
+		if(this.levelModel.getGroundLevelModel()[x][y].isConvertible()) {
+			this.levelModel.transformThisBoulderIntoADiamond(x, y);
+		} else {
+			this.levelModel.deleteThisBoulder(x, y);
 		}
 	}
 }

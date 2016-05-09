@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
 public class WinLoseView extends JFrame{
-	
+
 	private String winOrLose;
 
 	/**
@@ -36,14 +36,18 @@ public class WinLoseView extends JFrame{
     /**
      * Creates the view layout
      */
-    private void createLayout() {    	
+    private void createLayout() {
     	JTextArea help = new JTextArea();
     	help.setEditable(false);
     	if(winOrLose.equals("win"))
+    	{
 	    	help.setText("YOU WIN THE GAME :-)");
+    	}
     	else
+    	{
     		help.setText("YOU LOSE THE GAME :-( TRY AGAIN!");
-    	
+    	}
+
         this.add(help);
     }
 }
