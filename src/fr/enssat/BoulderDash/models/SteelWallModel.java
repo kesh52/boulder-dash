@@ -12,27 +12,18 @@ import fr.enssat.BoulderDash.models.DisplayableElementModel;
  * @since       2015-06-19
  */
 public class SteelWallModel extends DisplayableElementModel {
-	private static String spriteName;
-	private static boolean isDestructible;
-	private static boolean canMove;
-	private static boolean impactExplosive;
-	private static boolean animate;
-	private static int priority;
-	private static boolean falling;
-	private static String collideSound;
 
     /**
-     * Static dataset
      * Specifies the physical parameters of the object
      */
-	static {
+	{
 		spriteName = "steelwall";
-		isDestructible = false;
-		canMove = false;
-		impactExplosive = false;
-		animate = false;
+		flags.isDestructible = false;
+		flags.canMove = false;
+		flags.impactExplosive = false;
+		flags.animate = false;
 		priority = 3;
-		falling = false;
+		flags.falling = false;
 		collideSound = "touch";
 	}
 
@@ -40,7 +31,7 @@ public class SteelWallModel extends DisplayableElementModel {
      * Class constructor
      */
 	public SteelWallModel() {
-		super(isDestructible, canMove, spriteName, priority, impactExplosive, animate, falling, collideSound);
+		super();
 		this.loadSprite(spriteName);
 	}
 }

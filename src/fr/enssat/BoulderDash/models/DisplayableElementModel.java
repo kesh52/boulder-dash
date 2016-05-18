@@ -20,16 +20,13 @@ public abstract class DisplayableElementModel {
 	private static String groupName;
 	private static String stateValue;
 
-	private boolean destructible;
-	private boolean moving;
-	private boolean animate;
-	private boolean impactExplosive;
-	private String spriteName;
-	private int priority;
-	private BufferedImage sprite;
-    private boolean falling;
-	private boolean convertible;
-	private String collideSound;
+	protected DisplayableElementModelFlags flags = new DisplayableElementModelFlags();
+
+	protected boolean convertible;
+	protected String spriteName;
+	protected String collideSound;
+	protected BufferedImage sprite;
+	protected int priority;
 
 	/**
 	 * Static dataset
@@ -39,34 +36,7 @@ public abstract class DisplayableElementModel {
 		stateValue = "initial";
 	}
 
-	/**
-     * Class constructor
-     *
-	 * @param  destructible     Object destructible?
-	 * @param  moving           Object is moving?
-	 * @param  spriteName       Object sprite name?
-	 * @param  priority         Object priority?
-	 * @param  impactExplosive  Object explodes on impact?
-	 * @param  animate          Object can be animated?
-	 */
-	public DisplayableElementModel(boolean destructible, boolean moving, String spriteName, int priority, boolean impactExplosive, boolean animate, boolean falling, String collideSound, boolean convertible) {
-		this.moving = moving;
-		this.destructible = destructible;
-		this.spriteName = spriteName;
-		this.priority = priority;
-		this.animate = animate;
-		this.impactExplosive = impactExplosive;
-		this.priority = priority;
-		this.falling = falling;
-        this.convertible = convertible;
-		this.collideSound = collideSound;
-	}
-
-    public DisplayableElementModel(boolean destructible, boolean moving, String spriteName, int priority, boolean impactExplosive, boolean animate, boolean falling, String collideSound) {
-        this(
-                destructible, moving, spriteName, priority, impactExplosive, animate, falling, collideSound, false
-        );
-    }
+	public DisplayableElementModel(){}
 
     /**
      * Gets the 'destructible' value
@@ -74,7 +44,7 @@ public abstract class DisplayableElementModel {
 	 * @return  Whether object is destructible or not
 	 */
 	public boolean isDestructible() {
-		return this.destructible;
+		return this.flags.isDestructible;
 	}
 
 	/**
@@ -83,7 +53,7 @@ public abstract class DisplayableElementModel {
      * @return  Whether object is moving or not
 	 */
 	public boolean isMoving() {
-		return this.moving;
+		return this.flags.canMove;
 	}
 
 	/**
@@ -92,7 +62,7 @@ public abstract class DisplayableElementModel {
 	 * @return  Group name value
 	 */
 	public String getGroupName() {
-		return this.groupName;
+		return DisplayableElementModel.groupName;
 	}
 
 	/**
@@ -101,7 +71,7 @@ public abstract class DisplayableElementModel {
 	 * @return  State value
 	 */
 	public String getStateValue() {
-		return this.stateValue;
+		return DisplayableElementModel.stateValue;
 	}
 
 	/**
@@ -139,7 +109,7 @@ public abstract class DisplayableElementModel {
 	public int getPriority() {
 		return this.priority;
 	}
-	
+
 	/**
      * Sets the priority of the object
      *
@@ -155,7 +125,7 @@ public abstract class DisplayableElementModel {
      * @return  Whether object is animated or not
 	 */
 	public boolean isAnimate() {
-		return this.animate;
+		return this.flags.animate;
 	}
 
 	/**
@@ -164,7 +134,7 @@ public abstract class DisplayableElementModel {
      * @return  animate  Whether object is animated or not
 	 */
 	public void setAnimate(boolean animate) {
-		this.animate = animate;
+		this.flags.animate = animate;
 	}
 
 	/**
@@ -173,7 +143,7 @@ public abstract class DisplayableElementModel {
      * @return  Whether object explodes on impact or not
 	 */
 	public boolean isImpactExplosive() {
-		return this.impactExplosive;
+		return this.flags.impactExplosive;
 	}
 
 	/**
@@ -182,9 +152,9 @@ public abstract class DisplayableElementModel {
      * @return  impactExplosive  Whether object explodes on impact or not
 	 */
 	public void setImpactExplosive(boolean impactExplosive) {
-		this.impactExplosive = impactExplosive;
+		this.flags.impactExplosive = impactExplosive;
 	}
-	
+
 	/**
 	 * Sets the sprite
      *
@@ -246,7 +216,7 @@ public abstract class DisplayableElementModel {
      * @return  Whether object is falling or not
      */
     public boolean isFalling() {
-        return this.falling;
+        return this.flags.falling;
     }
 
     /**
@@ -255,7 +225,7 @@ public abstract class DisplayableElementModel {
      * @param  falling  Whether object is falling or not
      */
     public void setFalling(boolean falling) {
-        this.falling = falling;
+        this.flags.falling = falling;
     }
 
     /**
@@ -293,7 +263,7 @@ public abstract class DisplayableElementModel {
     public void setConvertibleValue(boolean convertible) {
         this.convertible = convertible;
     }
-	
+
 	/**
 	 * Function to update the sprites
 	 * @param  currentTimeMillis  Current time in milliseconds

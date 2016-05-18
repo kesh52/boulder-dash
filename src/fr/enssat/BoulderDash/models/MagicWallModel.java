@@ -15,37 +15,28 @@ import fr.enssat.BoulderDash.models.DisplayableElementModel;
  * @since       2015-06-19
  */
 public class MagicWallModel extends DisplayableElementModel {
-	private static String spriteName;
-	private static boolean isDestructible;
-	private static boolean canMove;
-	private static boolean impactExplosive;
-	private static boolean animate;
-	private static int priority;
-	private static boolean falling;
-	private static String collideSound;
 
     /**
      * Stores the frames
      * Used for the sprites
      */
-	private ArrayList<BufferedImage> framesMagicWall;
+	private ArrayList<BufferedImage> frames;
 
 	private long previousTime;
 	private int currentFrame;
 	private long speed;
 
     /**
-     * Static dataset
      * Specifies the physical parameters of the object
      */
-	static {
+	{
 		spriteName = "magicwall";
-		isDestructible = false;
-		canMove = false;
-		impactExplosive = false;
-		animate = false;
+		flags.isDestructible = false;
+		flags.canMove = false;
+		flags.impactExplosive = false;
+		flags.animate = false;
 		priority = 3;
-		falling = false;
+		flags.falling = false;
 		collideSound = "touch";
 	}
 
@@ -53,7 +44,7 @@ public class MagicWallModel extends DisplayableElementModel {
      * Class constructor
      */
 	public MagicWallModel() {
-		super(isDestructible, canMove, spriteName, priority, impactExplosive, animate, falling, collideSound);
+		super();
 		this.currentFrame = 0;
 		this.speed =  100;
 		this.initSprites();
@@ -63,29 +54,29 @@ public class MagicWallModel extends DisplayableElementModel {
 	 * Function to animate the sprite
 	 */
 	public void update(long time) {
-		if (time - previousTime >= speed) {
+		if (time - this.previousTime >= this.speed) {
 			// Update animation
-			previousTime = time;
+			this.previousTime = time;
 
 			try {
-				currentFrame += 1;
+				this.currentFrame += 1;
 
-				this.setSprite(framesMagicWall.get(this.currentFrame));
+				this.setSprite(this.frames.get(this.currentFrame));
 			} catch (IndexOutOfBoundsException e) {
-				currentFrame = 0;
+				this.currentFrame = 0;
 			}
 		}
 	}
-	
+
 	/**
 	 * Init the subimages
 	 */
 	private void initSprites() {
-		this.framesMagicWall = new ArrayList<BufferedImage>();
+		this.frames = new ArrayList<BufferedImage>();
 		/* INIT SPRITE FOR DIAMOND */
-		framesMagicWall.add(grabSprite(loadSprite(spriteName), 0, 0, 16, 16));
-		framesMagicWall.add(grabSprite(loadSprite(spriteName), 24, 0, 16, 16));
-		framesMagicWall.add(grabSprite(loadSprite(spriteName), 48, 0, 16, 16));
-		framesMagicWall.add(grabSprite(loadSprite(spriteName), 72, 0, 16, 16));
+		this.frames.add(this.grabSprite(this.loadSprite(spriteName), 0, 0, 16, 16));
+		this.frames.add(this.grabSprite(this.loadSprite(spriteName), 24, 0, 16, 16));
+		this.frames.add(this.grabSprite(this.loadSprite(spriteName), 48, 0, 16, 16));
+		this.frames.add(this.grabSprite(this.loadSprite(spriteName), 72, 0, 16, 16));
 	}
 }
