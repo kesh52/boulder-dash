@@ -67,7 +67,7 @@ public class LevelLoadHelper {
 	private RockfordModel rockfordInstance;
 	private int rockfordPositionX = 0;
 	private int rockfordPositionY = 0;
-	
+
 	private int diamondsToCatch;
 
 	private DisplayableElementModel[][] groundGrid;
@@ -205,44 +205,48 @@ public class LevelLoadHelper {
 
 				NodeList rowNode = (NodeList) currentLineNode.getChildNodes();
 
-				for (int x = 0; x < rowNode.getLength(); x++) {
-					Node currentRowNode = rowNode.item(x);
+				loopRowNodes(lineIndex, rowNode);
+			}
+		}
+	}
 
-					// Current row
-					if (currentRowNode.getNodeType() == Node.ELEMENT_NODE) {
-						Element currentRowElement = (Element) currentRowNode;
-						int rowIndex = Integer.parseInt(currentRowElement.getAttribute("index"));
+	private void loopRowNodes(int lineIndex, NodeList rowNode) throws NumberFormatException {
+		for (int x = 0; x < rowNode.getLength(); x++) {
+			Node currentRowNode = rowNode.item(x);
 
-						NodeList spriteNode = currentRowElement.getElementsByTagName("sprite");
+			// Current row
+			if (currentRowNode.getNodeType() == Node.ELEMENT_NODE) {
+				Element currentRowElement = (Element) currentRowNode;
+				int rowIndex = Integer.parseInt(currentRowElement.getAttribute("index"));
 
-						if (spriteNode.getLength() > 0) {
-							Node currentSpriteNode = spriteNode.item(0);
+				NodeList spriteNode = currentRowElement.getElementsByTagName("sprite");
 
-							if (currentSpriteNode.getNodeType() == Node.ELEMENT_NODE) {
-								Element currentSpriteElement = (Element) currentSpriteNode;
-								String currentSpriteName = currentSpriteElement.getAttribute("name");
-                                String currentSpriteConvertibleValue = currentSpriteElement.getAttribute("convertible");
-                                boolean currentSpriteConvertible = false;
+				if (spriteNode.getLength() > 0) {
+					Node currentSpriteNode = spriteNode.item(0);
 
-                                // No name? Continue.
-                                if(currentSpriteName == null || currentSpriteName.isEmpty()) {
-                                    continue;
-                                }
+					if (currentSpriteNode.getNodeType() == Node.ELEMENT_NODE) {
+						Element currentSpriteElement = (Element) currentSpriteNode;
+						String currentSpriteName = currentSpriteElement.getAttribute("name");
+		                String currentSpriteConvertibleValue = currentSpriteElement.getAttribute("convertible");
+		                boolean currentSpriteConvertible = false;
 
-                                if(currentSpriteConvertibleValue.equals("1")) {
-									currentSpriteConvertible = true;
-                                }
+		                // No name? Continue.
+		                if(currentSpriteName == null || currentSpriteName.isEmpty()) {
+		                    continue;
+		                }
 
-								// Process positions
-								int pX = rowIndex + this.limitsOffsetWidth;
-								int pY = lineIndex + this.limitsOffsetHeight;
+		                if(currentSpriteConvertibleValue.equals("1")) {
+							currentSpriteConvertible = true;
+		                }
 
-								try {
-									this.groundGrid[pX][pY] = this.constructGridElement(currentSpriteName, pX, pY, currentSpriteConvertible);
-								} catch (UnknownModelException e) {
-									e.printStackTrace();
-								}
-							}
+						// Process positions
+						int pX = rowIndex + this.limitsOffsetWidth;
+						int pY = lineIndex + this.limitsOffsetHeight;
+
+						try {
+							this.groundGrid[pX][pY] = this.constructGridElement(currentSpriteName, pX, pY, currentSpriteConvertible);
+						} catch (UnknownModelException e) {
+							e.printStackTrace();
 						}
 					}
 				}
@@ -458,20 +462,20 @@ public class LevelLoadHelper {
 	}
 
 	/**
-	 * Gets the number of Diamonds to catch 
+	 * Gets the number of Diamonds to catch
 	 * @return number of Diamonds to catch
 	 */
 	public int getDiamondsToCatch() {
 		return diamondsToCatch;
 	}
 
-	/** 
+	/**
 	 * Sets the number of Diamonds to catch
 	 * @param diamondsToCatch
 	 */
 	public void setDiamondsToCatch(int diamondsToCatch) {
 		this.diamondsToCatch = diamondsToCatch;
 	}
-	
-	
+
+
 }
