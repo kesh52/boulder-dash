@@ -9,6 +9,7 @@ import fr.enssat.BoulderDash.helpers.LevelSelectorHelper;
 import fr.enssat.BoulderDash.controllers.LevelEditorController;
 import fr.enssat.BoulderDash.controllers.NavigationBetweenViewController;
 import fr.enssat.BoulderDash.models.LevelModel;
+import fr.enssat.BoulderDash.models.LevelModelFactory;
 import fr.enssat.BoulderDash.views.LevelEditorGroundView;
 import fr.enssat.BoulderDash.views.AssetsLevelEditorComponent;
 import fr.enssat.BoulderDash.views.MenuLevelSelector;
@@ -39,23 +40,23 @@ public class LevelEditorView extends JFrame implements Observer {
     /**
      * Class constructor
      */
-	public LevelEditorView(LevelEditorController levelEditorController, LevelModel levelModel, NavigationBetweenViewController nav) {
+    public LevelEditorView(LevelEditorController levelEditorController, LevelModel levelModel, NavigationBetweenViewController nav) {
         this.levelEditorController = levelEditorController;
         this.levelModel = levelModel;
         this.nav = nav;
 
         this.levelModel.addObserver(this);
 
-		this.initializeView();
+        this.initializeView();
         this.createLayout();
 
         this.fieldPanel.grabFocus();
-	}
+    }
 
     /**
      * Initializes the view layout
      */
-	private void initializeView() {
+    private void initializeView() {
         this.setFocusable(true);
         this.setVisible(false);
         this.setResizable(false);
@@ -70,18 +71,18 @@ public class LevelEditorView extends JFrame implements Observer {
 
         Image appIcon = Toolkit.getDefaultToolkit().getImage("./res/app/app_icon.png");
         this.setIconImage(appIcon);
-	}
+    }
 
     /**
      * Creates the view layout
      */
-	private void createLayout() {
+    private void createLayout() {
         // List of levels
         LevelSelectorHelper levelSelectorHelper = new LevelSelectorHelper(true, this);
         this.menuLevelSelector = levelSelectorHelper.createLevelList();
 
         // Field + select panels
-		this.fieldPanel = new LevelEditorGroundView(this.levelModel, this);
+        this.fieldPanel = new LevelEditorGroundView(this.levelModel, this);
         this.selectPanel = new JPanel();
 
         this.assetsComponent = new AssetsLevelEditorComponent(this);
@@ -104,7 +105,7 @@ public class LevelEditorView extends JFrame implements Observer {
         // Add top components
         this.add(this.fieldPanel, BorderLayout.CENTER);
         this.add(this.selectPanel, BorderLayout.WEST);
-	}
+    }
 
     /**
      * Creates the given button
@@ -165,14 +166,16 @@ public class LevelEditorView extends JFrame implements Observer {
      * @param  selectedLevelValue  Selected level value
      */
     public void openedLevelChange(String selectedLevelValue) {
-        LevelModel pickedLevelModel;
+        LevelModel pickedLevelModel = null;
 
         if(selectedLevelValue != null && !selectedLevelValue.isEmpty()) {
             // Load existing model
-            pickedLevelModel = new LevelModel(selectedLevelValue, this.nav.getAudioLoadHelper(), "editor");
+            // pickedLevelModel = new LevelModel(selectedLevelValue, this.nav.getAudioLoadHelper(), "editor");
+            pickedLevelModel = new LevelModelFactory().createLevelModel("editor", selectedLevelValue, this.nav.getAudioLoadHelper());
         } else {
             // New blank model for editor
-            pickedLevelModel = new LevelModel(this.nav.getAudioLoadHelper());
+            // pickedLevelModel = new LevelModel(this.nav.getAudioLoadHelper());
+            pickedLevelModel = new LevelModelFactory().createLevelModel(this.nav.getAudioLoadHelper());
         }
 
         pickedLevelModel.setShowCursor(true);
@@ -222,7 +225,7 @@ public class LevelEditorView extends JFrame implements Observer {
      *
      * @param  level  Selected level
      */
-    public void setSelectedLevel(String level) { 
-    	this.selectedLevel = level;
+    public void setSelectedLevel(String level) {
+        this.selectedLevel = level;
     }
 }

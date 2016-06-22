@@ -21,11 +21,11 @@ import fr.enssat.BoulderDash.views.InformationPanel;
  * @since       2015-06-19
  */
 public class GameView extends JFrame implements Observer {
-	private GameGroundView gameGroundView;
-	private JPanel actionPanel;
-	private JPanel informationPanel;
-	private GameController gameController;
-	private LevelModel levelModel;
+    private GameGroundView gameGroundView;
+    private JPanel actionPanel;
+    private JPanel informationPanel;
+    private GameController gameController;
+    private LevelModel levelModel;
 
     /**
      * Class constructor
@@ -33,15 +33,15 @@ public class GameView extends JFrame implements Observer {
      * @param  gameController  Game controller
      * @param  levelModel      Level model
      */
-	public GameView(GameController gameController, LevelModel levelModel) {
-		this.gameController = gameController;
-		this.levelModel = levelModel;
-		
+    public GameView(GameController gameController, LevelModel levelModel) {
+        this.gameController = gameController;
+        this.levelModel = levelModel;
+
         this.initializeView();
         this.createLayout();
 
         this.gameGroundView.grabFocus();
-	}
+    }
 
     /**
      * Initializes the view
@@ -86,9 +86,9 @@ public class GameView extends JFrame implements Observer {
      *
      * @return  Game field view
      */
-	public GameGroundView getGameFieldView() {
-		return this.gameGroundView;
-	}
+    public GameGroundView getGameFieldView() {
+        return this.gameGroundView;
+    }
 
     /**
      * Creates the given button
@@ -96,24 +96,24 @@ public class GameView extends JFrame implements Observer {
      * @param   name  Button name
      * @return  Created button
      */
-	public JButton createButton(String id, String name) {
-		JButton button = new JButton(name);
-		button.addActionListener(this.gameController);
-		button.setActionCommand(id);
+    public JButton createButton(String id, String name) {
+        JButton button = new JButton(name);
+        button.addActionListener(this.gameController);
+        button.setActionCommand(id);
 
-		this.actionPanel.add(button);
+        this.actionPanel.add(button);
 
-		return button;
-	}
+        return button;
+    }
 
-	/**
+    /**
      * Updates the frame
      *
      * @param   obs  Observable item
      * @param   obj  Object item
      */
-	@Override
-	public void update(Observable obs, Object obj) {
-		// Nothing done.
-	}
+    @Override
+    public void update(Observable obs, Object obj) {
+        // Nothing done.
+    }
 }
