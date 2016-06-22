@@ -306,7 +306,7 @@ public abstract class LevelModel extends Observable implements Runnable {
      *
      * @return  Whether rockford is in model or not
      */
-    public boolean isRockfordInModel() {
+    private boolean isRockfordInModel() {
         boolean isInModel = false;
 
         // Iterate and catch it!
