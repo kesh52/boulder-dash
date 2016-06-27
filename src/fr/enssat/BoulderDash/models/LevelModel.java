@@ -9,7 +9,7 @@ import fr.enssat.BoulderDash.helpers.AudioLoadHelper;
 import fr.enssat.BoulderDash.helpers.LevelLoadHelper;
 import fr.enssat.BoulderDash.helpers.ModelConvertHelper;
 
-public abstract class LevelModel extends Observable implements Runnable {
+public class LevelModel extends Observable implements Runnable {
     protected DisplayableElementModel[][] groundGrid;
     protected String levelName;
     protected AudioLoadHelper audioLoadHelper;
