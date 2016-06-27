@@ -2,36 +2,28 @@ package fr.enssat.BoulderDash.tests;
 
 import static org.junit.Assert.assertEquals;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
-import org.mockito.Mockito;
+import org.junit.rules.ExpectedException;
 
 import fr.enssat.BoulderDash.exceptions.LevelConstraintNotRespectedException;
 import fr.enssat.BoulderDash.helpers.AudioLoadHelper;
-import fr.enssat.BoulderDash.models.DiamondModel;
 import fr.enssat.BoulderDash.models.DisplayableElementModel;
 import fr.enssat.BoulderDash.models.DoorModel;
 import fr.enssat.BoulderDash.models.GameInformationModel;
 import fr.enssat.BoulderDash.models.LevelModel;
 import fr.enssat.BoulderDash.models.LevelModelFactory;
-import fr.enssat.BoulderDash.models.RockfordModel;
 
 public class TestLevelModel {
     private AudioLoadHelper mockAudioLoadHelper;
 
     @Before
     public void setUp() {
-        String collisionSound = null;
         this.mockAudioLoadHelper = new AudioLoadHelper();
-        //AudioLoadHelper spy = Mockito.spy(mockAudioLoadHelper);
-        //Mockito.doNothing().when(spy).playSound(collisionSound);;
-
     }
 
     @Test
@@ -56,9 +48,22 @@ public class TestLevelModel {
         assertEquals(true, doorModelExist);
     }
 
-    // Mit diesem Test testet man sowohl die Methode isRockfordInModel als auch die geworfene Exception
+    @Rule
+    public ExpectedException expectedEx = ExpectedException.none();
+    @Test
+    public void testIsRockfordInModel() throws LevelConstraintNotRespectedException {
+        LevelModel levelModel = new LevelModelFactory().createLevelModel(this.mockAudioLoadHelper);
+        levelModel.transformThisBoulderIntoADiamond(0, 0);
+        levelModel.transformThisBoulderIntoADiamond(1, 0);
+        levelModel.transformThisBoulderIntoADiamond(2, 0);
+
+        expectedEx.expect(LevelConstraintNotRespectedException.class);
+        levelModel.checkConstraints();
+        expectedEx.expectMessage("Add Rockford on the map!");
+    }
+
     @Test(expected=LevelConstraintNotRespectedException.class)
-    public void testIsRockfordInModelIndirectly() throws LevelConstraintNotRespectedException {
+    public void testCheckConstraints() throws LevelConstraintNotRespectedException {
         LevelModel levelModel = new LevelModelFactory().createLevelModel(this.mockAudioLoadHelper);
         levelModel.checkConstraints();
     }
